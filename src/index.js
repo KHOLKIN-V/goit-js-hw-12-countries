@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import '@pnotify/core/dist/BrightTheme.css';
 // import { alert, defaultModules } from 'node_modules/@pnotify/core/dist/PNotify.js';
 import { alert, notice, info, success, error } from '@pnotify/core';
+import API from '../src/fetch.js'
 
 const cardContainer = document.querySelector('.js-card-container');
 const searchCountry = document.querySelector('.js-search-form');
@@ -14,25 +15,26 @@ searchCountry.addEventListener('input', debounce(onSearch, 500));
 function onSearch (e) {
     const form = e.target;
     const searchQuery = form.value;
+    searchQuery.trim();
 
-    fetchCountries(searchQuery)
-    .then(render => {
-        if (render.length >= 2 && render.length <= 10) {
-            return renderCountryArray(render);
-        } else if (render.length === 1) {
-            return renderCountryCard(render);
-        } else if (render.length > 10) {
-            alert({
-                text: 'Too many matches found. Please, enter a more specific query!'
-              });
-        }
-    })
-    .catch(fetchError);
-}
+    if (searchQuery != '') {
+        API.fetchCountries(searchQuery)
+        .then(render => {
+            if (render.length >= 2 && render.length <= 10) {
+                return renderCountryArray(render);
+            } else if (render.length === 1) {
+                return renderCountryCard(render);
+            } else if (render.length > 10) {
+                alert({
+                    text: 'Too many matches found. Please, enter a more specific query!'
+                  });
+            }
+        })
+        .catch(fetchError);
+    } else {
+        return;
+    };
 
-function fetchCountries(countryId) {
-return fetch(`https://restcountries.eu/rest/v2/name/${countryId}`)
-.then(response => response.json());
 };
 
 function renderCountryCard (country) {
