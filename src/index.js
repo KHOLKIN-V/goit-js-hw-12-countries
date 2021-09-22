@@ -1,10 +1,9 @@
 import countryCards from '../templates/country-card.hbs';
 import countryArray from '../templates/country-array.hbs';
 import debounce from 'lodash.debounce';
-import { alert, defaultModules } from '@pnotify/core';
-import * as PNotifyMobile from '@pnotify/mobile';
-
-defaultModules.set(PNotifyMobile, {});
+import '@pnotify/core/dist/BrightTheme.css';
+// import { alert, defaultModules } from 'node_modules/@pnotify/core/dist/PNotify.js';
+import { alert, notice, info, success, error } from '@pnotify/core';
 
 const cardContainer = document.querySelector('.js-card-container');
 const searchCountry = document.querySelector('.js-search-form');
@@ -22,7 +21,7 @@ function onSearch (e) {
             return renderCountryArray(render);
         } else if (render.length === 1) {
             return renderCountryCard(render);
-        } else if (i.length > 10) {
+        } else if (render.length > 10) {
             alert({
                 text: 'Too many matches found. Please, enter a more specific query!'
               });
