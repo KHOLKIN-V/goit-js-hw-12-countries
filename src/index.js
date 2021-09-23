@@ -17,7 +17,7 @@ function onSearch (e) {
     const searchQuery = form.value;
     searchQuery.trim();
 
-    if (searchQuery != '') {
+    if (searchQuery !== '') {
         API.fetchCountries(searchQuery)
         .then(render => {
             if (render.length >= 2 && render.length <= 10) {
@@ -27,6 +27,10 @@ function onSearch (e) {
             } else if (render.length > 10) {
                 alert({
                     text: 'Too many matches found. Please, enter a more specific query!'
+                  });
+            } else {
+                alert({
+                    text: 'Nothing found'
                   });
             }
         })
