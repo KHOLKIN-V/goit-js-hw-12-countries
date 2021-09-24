@@ -1,5 +1,5 @@
-import countryCards from '../templates/country-card.hbs';
-import countryArray from '../templates/country-array.hbs';
+import countryCards from './templates/country-card.hbs';
+import countryArray from './templates/country-array.hbs';
 import debounce from 'lodash.debounce';
 import '@pnotify/core/dist/BrightTheme.css';
 // import { alert, defaultModules } from 'node_modules/@pnotify/core/dist/PNotify.js';
@@ -35,8 +35,6 @@ function onSearch (e) {
             }
         })
         .catch(fetchError);
-    } else {
-        return;
     };
 
 };
